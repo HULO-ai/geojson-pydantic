@@ -48,3 +48,17 @@ def test_position3d_valid_coordinates(coordinates):
     assert p.longitude == coordinates[0]
     assert p.latitude == coordinates[1]
     assert p.altitude == coordinates[2]
+
+
+@pytest.mark.parametrize(
+    "coordinates", [(-181, 0, 0), (181, 0, 0), (-200, 0, 0), (200, 0, 0)]
+)
+def test_position3d_invalid_longitude(coordinates):
+    """
+    Longitude outside of -180 to 180 degrees should raise a validation error
+    """
+    Position3D(
+        longitude=coordinates[0],
+        latitude=coordinates[1],
+        altitude=coordinates[2],
+    )

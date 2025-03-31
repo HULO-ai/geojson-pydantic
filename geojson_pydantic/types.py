@@ -10,10 +10,40 @@ BBox = Union[
     Tuple[float, float, float, float, float, float],  # 3D bbox
 ]
 
-Position2D = NamedTuple("Position2D", [("longitude", float), ("latitude", float)])
-Position3D = NamedTuple(
-    "Position3D", [("longitude", float), ("latitude", float), ("altitude", float)]
-)
+Longitude = Annotated[
+    Union[float, int],
+    Field(
+        title="Coordinate longitude",
+        ge=-180,
+        le=180,
+    ),
+]
+
+Latitude = Annotated[
+    Union[float, int],
+    Field(
+        title="Coordinate latitude",
+        ge=-90,
+        le=90,
+    ),
+]
+
+
+class Position2D(NamedTuple):
+    """Position without altitude"""
+
+    longitude: Longitude
+    latitude: Latitude
+
+
+class Position3D(NamedTuple):
+    """Position with altitude"""
+
+    longitude: Longitude
+    latitude: Latitude
+    altitude: float
+
+
 Position = Union[Position2D, Position3D]
 
 # Coordinate arrays
